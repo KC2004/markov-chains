@@ -49,18 +49,18 @@ def make_chains(text_string):
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    random_key = choice(chains.keys())  # pick a random key tuple from chains
+    key_bigram = choice(chains.keys())  # pick a random key tuple from chains
 
-    story = "%s %s " % (random_key[0], random_key[1])
+    story = "%s %s " % (key_bigram[0], key_bigram[1])
 
-    while random_key in chains:
+    while key_bigram in chains:
 
-        third_word = choice(chains[random_key])     # pick a random word from value list
+        third_word = choice(chains[key_bigram])     # pick a random word from value list
 
         story += third_word + " "
 
-        random_key = (random_key[1], third_word.strip())          # pick a random key tuple from chains
- 
+        key_bigram = (key_bigram[1], third_word.strip())          # pick a random key tuple from chains
+
     return story
 
 
