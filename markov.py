@@ -32,16 +32,16 @@ def make_chains(text_string):
 
     for i in range(len(list_of_words) - 2):
         #creating tuple of two words
-        bigram = (list_of_words[i], list_of_words[i + 1])
+        bigram_key = (list_of_words[i], list_of_words[i + 1])
         value = list_of_words[i + 2]
 
         #checking to see if two words are in chains dictionary
         #appending value to the list
-        if bigram in chains:
-            chains[bigram].append(value)
+        if bigram_key in chains:
+            chains[bigram_key].append(value)
         #if not, adding it to chains dictionary and giving it a value of next word as a list
         else:
-            chains[bigram] = [value]
+            chains[bigram_key] = [value]
 
     return chains
 
@@ -49,13 +49,22 @@ def make_chains(text_string):
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    random_key = choice(chains.keys())          # pick a random key tuple from chains
+    random_key = choice(chains.keys())  # pick a random key tuple from chains
 
-    third_word = choice(chains[random_key])     # pick a random word from value list c
+    story = "%s %s " % (random_key[0], random_key[1])
 
-    return "%s %s %s" % (random_key[0], random_key[1], third_word)
+    while random_key in chains:
+
+        third_word = choice(chains[random_key])     # pick a random word from value list
+
+        story += third_word + " "
+
+        random_key = (random_key[1], third_word.strip())          # pick a random key tuple from chains
+ 
+    return story
 
 
+# main
 input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
