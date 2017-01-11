@@ -12,8 +12,6 @@ def open_and_read_file(file_path):
     file_string = open(file_path).read()
 
     return file_string
-    "This should be a variable that contains your file text as one long string"
-
 
 
 def make_chains(text_string):
@@ -45,24 +43,17 @@ def make_chains(text_string):
         else:
             chains[bigram] = [value]
 
-
     return chains
 
-    
 
-    # # your code goes here
+def make_text(chains):
+    """Takes dictionary of markov chains; returns random text."""
 
-    # return chains
+    random_key = choice(chains.keys())          # pick a random key tuple from chains
 
+    third_word = choice(chains[random_key])     # pick a random word from value list c
 
-# def make_text(chains):
-#     """Takes dictionary of markov chains; returns random text."""
-
-#     text = ""
-
-#     # your code goes here
-
-#     return text
+    return "%s %s %s" % (random_key[0], random_key[1], third_word)
 
 
 input_path = "green-eggs.txt"
@@ -71,10 +62,9 @@ input_path = "green-eggs.txt"
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-print make_chains(input_text)
-# chains = make_chains(input_text)
+chains = make_chains(input_text)
 
-# # Produce random text
-# random_text = make_text(chains)
+# Produce random text
+random_text = make_text(chains)
 
-# print random_text
+print random_text
