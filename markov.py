@@ -70,7 +70,8 @@ def make_text(chains):
         for n in range(1, num_in_ngram):
             key_ngram_list += key_ngram[n]          
 
-        key_ngram = tuple(key_ngram_list)  
+        key_ngram = tuple(key_ngram_list)
+        print key_ngram  
     
     return story
 
