@@ -55,45 +55,42 @@ def make_text(chains):
 
     key_ngram = choice(chains.keys())  # pick a random key tuple from chains
     num_in_ngram = len(key_ngram)       # number of words in key
-    print num_in_ngram
-
+ 
+    # initialize variables
     story = ""
     key_ngram_list = []
 
-    for i in range(0, num_in_ngram):
+    for i in range(0, num_in_ngram):    # first n words in story will be words in tuple key
         story += key_ngram[i] + ' '
 
     while key_ngram in chains:
 
         nth_word = choice(chains[key_ngram])     # pick a random word from value list
-        print nth_word
         story += nth_word + " "
 
-        print story
-        print key_ngram
-
-        for n in range(1, num_in_ngram):
+        # make the subsequent tuple key:
+        for n in range(1, num_in_ngram):  # add last n-1 words to a list
             key_ngram_list.append(key_ngram[n])
-        print key_ngram_list
-
-        key_ngram_list.append(choice(chains[key_ngram]))
-        #key_ngram_list.append("something")
-
-        key_ngram = tuple(key_ngram_list)
-        print key_ngram
-
+ 
+        key_ngram_list.append(choice(chains[key_ngram])) # add random choice from value list (in key, value) 
+        
+        # convert list to tuple for key in dictionary
+        key_ngram = tuple(key_ngram_list) 
+        # flush key_ngram_list for next iteration
+        key_ngram_list = []
+    
     return story
 
 
 # main
 input_path = argv[1]
+n_in_ngram = int(argv[2])
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
-chains = make_chains(input_text, 3)
-#print chains
+chains = make_chains(input_text, n_in_ngram)
 
 # Produce random text
 random_text = make_text(chains)
