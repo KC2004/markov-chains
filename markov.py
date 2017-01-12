@@ -54,21 +54,33 @@ def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
     key_ngram = choice(chains.keys())  # pick a random key tuple from chains
+    num_in_ngram = len(key_ngram)       # number of words in key
+    print num_in_ngram
+    
     story = ""
-    key_ngram_list = []
-    num_in_ngram = len(key_ngram)
+    
+    key_ngram_list = []     # make to so can add new values
+    
 
-    for i in range(num_in_ngram):
-        story += key_ngram[i] + ' '
+    for i in range(0, num_in_ngram):
+        story += key_ngram[i] + ' ' 
+    print story
 
     while key_ngram in chains:
 
         nth_word = choice(chains[key_ngram])     # pick a random word from value list
-
+        
         story += nth_word + " "
 
+        print story 
+        
+
         for n in range(1, num_in_ngram):
-            key_ngram_list += key_ngram[n]          
+            key_ngram_list.append(key_ngram[n])
+
+        key_ngram_list.append(chains[key_ngram])
+            
+        print key_ngram_list       
 
         key_ngram = tuple(key_ngram_list)
         print key_ngram  
@@ -84,9 +96,9 @@ input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
 chains = make_chains(input_text, 3)
-print chains
+#print chains
 
 # Produce random text
 random_text = make_text(chains)
 
-print random_text
+#print random_text
